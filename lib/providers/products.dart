@@ -38,7 +38,7 @@ class Products with ChangeNotifier {
     ),
   ];
   List<Product> get items {
-    return [..._items];
+    return showFavoritesOnly ?  [..._items] : [..._items.where((x) => x.isFavorite)];
   }
 
   addProduct(Product value){
@@ -52,5 +52,12 @@ class Products with ChangeNotifier {
   }
   Product findById(String id){
     return _items.firstWhere((prod) => prod.id == id);
+  }
+
+  var showFavoritesOnly = false;
+
+  void showFavorites(bool value){
+    showFavoritesOnly = value;
+    notifyListeners();
   }
 }
